@@ -4,4 +4,4 @@ resources:
   # Looks for resources in the same path as this file 
   - deployment.yaml
   # - storage.yaml
-  # - namespace.yaml
+  - namespace.yaml
