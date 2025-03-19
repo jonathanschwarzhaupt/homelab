@@ -27,12 +27,12 @@ spec:
         - name: LD_SUPERUSER_NAME
           valueFrom:
             secretKeyRef:
-              name: linkding-secret
+              name: linkding-superuser
               key: username
         - name: LD_SUPERUSER_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: linkding-secret
+              name: linkding-superuser
               key: password
 
         securityContext:
