@@ -28,7 +28,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: linkding-superuser
-              key: username
+              key: user
         - name: LD_SUPERUSER_PASSWORD
           valueFrom:
             secretKeyRef:
