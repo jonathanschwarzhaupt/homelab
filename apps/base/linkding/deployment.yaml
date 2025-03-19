@@ -23,17 +23,9 @@ spec:
         ports:
         - containerPort: 9090
 
-        env:
-        - name: LD_SUPERUSER_NAME
-          valueFrom:
-            secretKeyRef:
-              name: linkding-superuser
-              key: user
-        - name: LD_SUPERUSER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: linkding-superuser
-              key: password
+        envFrom:
+          - secretRef:
+            name: linkding-container-env
 
         securityContext:
           allowPrivilegeEscalation: false

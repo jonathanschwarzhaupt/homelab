@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   # Looks for resources in the same path as this file
   - namespace.yaml
-  # - deployment.yaml
-  # - storage.yaml
-  # - service.yaml
-  # - linkding-secret.yaml
+  - deployment.yaml
+  - storage.yaml
+  - service.yaml
