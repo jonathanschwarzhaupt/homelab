@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   # Looks for resources in the same path as this file
-  - deployment.yaml
-  - storage.yaml
   - namespace.yaml
-  - service.yaml
-  - linkding-secret.yaml
+  # - deployment.yaml
+  # - storage.yaml
+  # - service.yaml
+  # - linkding-secret.yaml

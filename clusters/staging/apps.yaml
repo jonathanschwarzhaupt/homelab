@@ -13,6 +13,7 @@ spec:
     kind: GitRepository
     name: flux-system
   path: ./apps/staging
+  # Tells Flux to remove resources, not enabled by default
   prune: True
 
   decryption:
