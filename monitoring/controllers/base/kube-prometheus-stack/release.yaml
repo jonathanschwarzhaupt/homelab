@@ -7,9 +7,9 @@ spec:
   interval: 30m
   chart:
     spec:
-		# The chart to install
+		  # The chart to install
       chart: kube-prometheus-stack
-			# Let Flux automatically install minor and patch versions 
+			# Let Flux automatically install minor and patch versions
       version: "66.X"
       # The repository to install the chart from
       sourceRef:
