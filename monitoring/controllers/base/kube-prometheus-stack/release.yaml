@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+		# The chart to install
+      chart: kube-prometheus-stack
+			# Let Flux automatically install minor and patch versions 
+      version: "66.X"
+      # The repository to install the chart from
+      sourceRef:
+        kind: HelmRepository
+        name: kube-prometheus-stack
+        namespace: monitoring
+      interval: 12h
+  # Handle custom resource definitions automatically for upgrades
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  # Helm chart as source of truth, Flux will revert manual changes
+  driftDetection:
+    mode: enabled
+    ignore:
+      # Ignore "validated" annotation which is not inserted during install
+      - paths: ["/metadata/annotations/prometheus-operator-validated"]
+        target:
+          kind: PrometheusRule
+  # Use 'helm show values ...' for a list of values for this chart
+  values:
+    grafana:
+      adminPassword: password
+
