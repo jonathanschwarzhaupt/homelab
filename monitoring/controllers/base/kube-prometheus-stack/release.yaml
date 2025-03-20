@@ -5,13 +5,13 @@ metadata:
   namespace: monitoring
 spec:
   interval: 30m
-	# The chart to pull
+  # The chart to pull
   chart:
     spec:
       chart: kube-prometheus-stack
-			# Let Flux update minor and patch versions
+      # Let Flux update minor and patch versions
       version: "66.x"
-			# The repository to pull the chart from
+      # The repository to pull the chart from
       sourceRef:
         kind: HelmRepository
         name: kube-prometheus-stack
