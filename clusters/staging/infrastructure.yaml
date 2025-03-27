@@ -11,6 +11,7 @@ spec:
     kind: GitRepository
     name: flux-system
   path: ./infrastructure/controllers/staging
+  prune: True
 
   decryption:
     provider: sops
