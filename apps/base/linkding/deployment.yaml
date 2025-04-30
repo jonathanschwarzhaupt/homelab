@@ -12,10 +12,6 @@ spec:
       labels:
         app: linkding
     spec:
-      securityContext:
-        fsGroup: 33  # privilege for volume, set to www-data group ID
-        runAsUser: 33  # ID of www-data user
-        runAsGroup: 33  # Group ID of www-data user
 
       containers:
       - name: linkding
@@ -33,6 +29,11 @@ spec:
         volumeMounts:
         - mountPath: /etc/linkding/data
           name: linkding-data
+
+      securityContext:
+        fsGroup: 33  # privilege for volume, set to www-data group ID
+        runAsUser: 33  # ID of www-data user
+        runAsGroup: 33  # Group ID of www-data user
 
       volumes:
       - name: linkding-data
