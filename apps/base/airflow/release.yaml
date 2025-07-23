@@ -8,7 +8,7 @@ spec:
   # The chart to pull
   chart:
     spec:
-      chart: apache-airflow
+      chart: apache-airflow/airflow
       version: "1.18.0"
       # The repository to pull the chart from
       sourceRef:
