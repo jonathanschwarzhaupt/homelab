@@ -4,5 +4,5 @@ namespace: airflow
 resources:
   - ../../base/airflow
   - airflow-fernet-key.yaml
-  - airflow-workers-secret.yaml
+  - airflow-worker-secrets.yaml
   - redis-password.yaml
