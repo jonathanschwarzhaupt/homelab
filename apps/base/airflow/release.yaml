@@ -67,7 +67,7 @@ spec:
     # Worker configuration with extra volume mounts
     workers:
       env:
-        - name: COMDIRECT_TURSO_PATH
+        - name: COMDIRECT__TURSO_PATH
           value: "/opt/airflow/database/comdirect"
         - name: COMDIRECT_CLIENT_ID
           valueFrom:
