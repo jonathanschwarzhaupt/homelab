@@ -8,7 +8,7 @@ spec:
   # The chart to pull
   chart:
     spec:
-      chart: apache-airflow/airflow
+      chart: airflow
       version: "1.18.0"
       # The repository to pull the chart from
       sourceRef:
@@ -38,7 +38,9 @@ spec:
         path: "/"
         pathType: "Prefix"
         hosts:
-          - airflow.jonathanschwarzhaupt.net
+          - name: airflow.jonathanschwarzhaupt.net
+            tls:
+              enabled: false
 
     # Set static fernet key
     fernetKeySecretName: airflow-fernet-key
@@ -55,6 +57,16 @@ spec:
       persistence:
         enabled: false
 
+    # Recommended configuration from official documentation
+    # https://airflow.apache.org/docs/helm-chart/stable/index.html#installing-the-chart-with-argo-cd-flux-rancher-or-terraform
+    useStandardNaming: true
+    createUserJob:
+      useHelmHooks: false
+      applyCustomEnv: false
+    migrateDatabaseJob:
+      useHelmHooks: false
+      applyCustomEnv: false
+
     # Worker configuration with extra volume mounts
     workers:
       env:
@@ -64,32 +76,32 @@ spec:
           valueFrom:
             secretKeyRef:
               name: airflow-worker-secrets
-              value: COMDIRECT_CLIENT_ID
+              key: COMDIRECT_CLIENT_ID
         - name: COMDIRECT_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: airflow-worker-secrets
-              value: COMDIRECT_CLIENT_SECRET
+              key: COMDIRECT_CLIENT_SECRET
         - name: COMDIRECT_USERNAME
           valueFrom:
             secretKeyRef:
               name: airflow-worker-secrets
-              value: COMDIRECT_USERNAME
+              key: COMDIRECT_USERNAME
         - name: COMDIRECT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: airflow-worker-secrets
-              value: COMDIRECT_PASSWORD
+              key: COMDIRECT_PASSWORD
         - name: TURSO_SYNC_URL
           valueFrom:
             secretKeyRef:
               name: airflow-worker-secrets
-              value: TURSO_SYNC_URL
+              key: TURSO_SYNC_URL
         - name: TURSO_AUTH_TOKEN
           valueFrom:
             secretKeyRef:
               name: airflow-worker-secrets
-              value: TURSO_AUTH_TOKEN
+              key: TURSO_AUTH_TOKEN
 
       # Volume claim templates for persistent SQLite storage
       volumeClaimTemplates:
@@ -103,7 +115,7 @@ spec:
               requests:
                 storage: "2Gi"
       # Mount the SQLite volume
-      etraVolumeMounts:
+      extraVolumeMounts:
         - name: "comdirect-data"
           mountPath: "/opt/airflow/database/comdirect"
 
