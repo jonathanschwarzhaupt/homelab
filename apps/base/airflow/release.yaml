@@ -8,7 +8,7 @@ spec:
   # The chart to pull
   chart:
     spec:
-      chart: airflow
+      chart: apache-airflow/airflow
       version: "1.18.0"
       # The repository to pull the chart from
       sourceRef:
@@ -22,3 +22,118 @@ spec:
     crds: CreateReplace
   driftDetection:
     mode: enabled
+
+  values:
+    # My custom airflow image with DAGs baked in
+    images:
+      airflow:
+        repository: ghcr.io/jonathanschwarzhaupt/plumbing-airflow
+        tag: v0.3.2
+
+    # Ingress configuration
+    ingress:
+      apiServer:
+        enabled: true
+        ingressClassName: "traefik"
+        path: "/"
+        pathType: "Prefix"
+        hosts:
+          - airflow.jonathanschwarzhaupt.net
+
+    # Set static fernet key
+    fernetKeySecretName: airflow-fernet-key
+
+    # Set redis password
+    redis:
+      passwordSecretName: redis-password
+
+    # Which also needs to be set in Airflow database & redis config
+    data:
+      brokerUrlSecretName: redis-password
+
+    logs:
+      persistence:
+        enabled: false
+
+    # Worker configuration with extra volume mounts
+    workers:
+      env:
+        - name: COMDIRECT_TURSO_PATH
+          value: "/opt/airflow/database/comdirect"
+        - name: COMDIRECT_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              value: COMDIRECT_CLIENT_ID
+        - name: COMDIRECT_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              value: COMDIRECT_CLIENT_SECRET
+        - name: COMDIRECT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              value: COMDIRECT_USERNAME
+        - name: COMDIRECT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              value: COMDIRECT_PASSWORD
+        - name: TURSO_SYNC_URL
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              value: TURSO_SYNC_URL
+        - name: TURSO_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              value: TURSO_AUTH_TOKEN
+
+      # Volume claim templates for persistent SQLite storage
+      volumeClaimTemplates:
+        - metadata:
+            name: "comdirect-data"
+          spec:
+            storageClassName: "local-path"
+            accessModes:
+              - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: "2Gi"
+      # Mount the SQLite volume
+      etraVolumeMounts:
+        - name: "comdirect-data"
+          mountPath: "/opt/airflow/database/comdirect"
+
+      # Log groomer configuration for Airflow Celery workers
+      logGroomerSidecar:
+        enabled: true
+        retentionDays: 3
+ 
+      persistence:
+        enabled: true
+        size: 3Gi
+
+    # Airflow scheduler configuration
+    scheduler:
+      logGroomerSidecar:
+        enabled: true
+        retentionDays: 3
+
+    # Airflow triggerer configuration
+    scheduler:
+      logGroomerSidecar:
+        enabled: true
+        retentionDays: 3
+
+      persistence:
+        enabled: true
+        size: 3Gi
+
+    # Airflow DAG Processor configuration
+    dagProcessor:
+      logGroomerSidecar:
+        enabled: true
+        retentionDays: 3
