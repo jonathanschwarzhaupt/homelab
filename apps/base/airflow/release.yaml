@@ -50,6 +50,9 @@ spec:
       # passwordSecretName: redis-password
       password: "tmp-pw-testing"
 
+    # Set webserver key
+    webserverSecretKeySecretName: airflow-webserver-secret
+
     logs:
       persistence:
         enabled: false
