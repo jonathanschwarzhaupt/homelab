@@ -47,7 +47,8 @@ spec:
 
     # Set redis password
     redis:
-      passwordSecretName: redis-password
+      # passwordSecretName: redis-password
+      password: "tmp-pw-testing"
 
     logs:
       persistence:
