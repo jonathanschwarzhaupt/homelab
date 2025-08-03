@@ -49,10 +49,6 @@ spec:
     redis:
       passwordSecretName: redis-password
 
-    # Which also needs to be set in Airflow database & redis config
-    data:
-      brokerUrlSecretName: redis-password
-
     logs:
       persistence:
         enabled: false
