@@ -56,6 +56,12 @@ spec:
     logs:
       persistence:
         enabled: false
+    
+    config:
+      logging:
+        colored_console_log: 'True'
+      celery:
+        worker_concurrency: 4
 
     # Recommended configuration from official documentation
     # https://airflow.apache.org/docs/helm-chart/stable/index.html#installing-the-chart-with-argo-cd-flux-rancher-or-terraform
@@ -127,6 +133,13 @@ spec:
       persistence:
         enabled: true
         size: 3Gi
+
+      resources:
+        requests:
+          memory: 1Gi
+        limits:
+          memory: 2.5Gi
+
 
     # Airflow scheduler configuration
     scheduler:
