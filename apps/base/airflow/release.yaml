@@ -28,7 +28,7 @@ spec:
     images:
       airflow:
         repository: ghcr.io/jonathanschwarzhaupt/plumbing-airflow
-        tag: v0.3.2
+        tag: v0.3.3
 
     # Ingress configuration
     ingress:
@@ -108,6 +108,17 @@ spec:
             secretKeyRef:
               name: airflow-worker-secrets
               key: TURSO_AUTH_TOKEN
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: ANTHROPIC_API_KEY
+        - name: LOGFIRE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: LOGFIRE_TOKEN
+
 
       # Volume claim templates for persistent SQLite storage
       volumeClaimTemplates:
