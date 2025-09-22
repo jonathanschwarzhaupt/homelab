@@ -29,6 +29,9 @@ spec:
       airflow:
         repository: ghcr.io/jonathanschwarzhaupt/plumbing-airflow
         tag: v0.3.3
+    
+    # Choice of executor - local for its simplicity and current requirements
+    executor: "LocalExecutor"
 
     # Ingress configuration
     ingress:
@@ -60,8 +63,8 @@ spec:
     config:
       logging:
         colored_console_log: 'True'
-      celery:
-        worker_concurrency: 4
+      # celery:
+      #   worker_concurrency: 4
 
     # Recommended configuration from official documentation
     # https://airflow.apache.org/docs/helm-chart/stable/index.html#installing-the-chart-with-argo-cd-flux-rancher-or-terraform
@@ -140,6 +143,7 @@ spec:
       logGroomerSidecar:
         enabled: true
         retentionDays: 3
+        frequencyMinutes: 15
  
       persistence:
         enabled: true
@@ -166,12 +170,14 @@ spec:
       logGroomerSidecar:
         enabled: true
         retentionDays: 3
+        frequencyMinutes: 15
 
     # Airflow triggerer configuration
     triggerer:
       logGroomerSidecar:
         enabled: true
         retentionDays: 3
+        frequencyMinutes: 15
 
       persistence:
         enabled: true
