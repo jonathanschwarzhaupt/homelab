@@ -76,51 +76,6 @@ spec:
       useHelmHooks: false
       applyCustomEnv: false
 
-    # environment variables for all airflow containers
-    env:
-      - name: COMDIRECT__TURSO_PATH
-        value: "/opt/airflow/database/comdirect"
-      - name: COMDIRECT_CLIENT_ID
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: COMDIRECT_CLIENT_ID
-      - name: COMDIRECT_CLIENT_SECRET
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: COMDIRECT_CLIENT_SECRET
-      - name: COMDIRECT_USERNAME
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: COMDIRECT_USERNAME
-      - name: COMDIRECT_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: COMDIRECT_PASSWORD
-      - name: TURSO_SYNC_URL
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: TURSO_SYNC_URL
-      - name: TURSO_AUTH_TOKEN
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: TURSO_AUTH_TOKEN
-      - name: ANTHROPIC_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: ANTHROPIC_API_KEY
-      - name: LOGFIRE_TOKEN
-        valueFrom:
-          secretKeyRef:
-            name: airflow-worker-secrets
-            key: LOGFIRE_TOKEN
-
 
       # Volume claim templates for persistent SQLite storage
       volumeClaimTemplates:
@@ -166,6 +121,50 @@ spec:
 
     # Airflow scheduler configuration
     scheduler:
+      env:
+        - name: COMDIRECT__TURSO_PATH
+          value: "/opt/airflow/database/comdirect"
+        - name: COMDIRECT_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: COMDIRECT_CLIENT_ID
+        - name: COMDIRECT_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: COMDIRECT_CLIENT_SECRET
+        - name: COMDIRECT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: COMDIRECT_USERNAME
+        - name: COMDIRECT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: COMDIRECT_PASSWORD
+        - name: TURSO_SYNC_URL
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: TURSO_SYNC_URL
+        - name: TURSO_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: TURSO_AUTH_TOKEN
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: ANTHROPIC_API_KEY
+        - name: LOGFIRE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: airflow-worker-secrets
+              key: LOGFIRE_TOKEN
+
       logGroomerSidecar:
         enabled: true
         retentionDays: 3
