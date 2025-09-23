@@ -151,13 +151,13 @@ spec:
 
     # Airflow scheduler configuration
     scheduler:
-      extraVolumes:
-        - name: "comdirect-data"
-          PersistentVolumeClaim:
-            claimName: "comdirect-data-pvc"
-      extraVolumeMounts:
-        - name: "comdirect-data"
-          mountPath: "/opt/airflow/database/comdirect"
+      # extraVolumes:
+      #   - name: "comdirect-data"
+      #     PersistentVolumeClaim:
+      #       claimName: "comdirect-data-pvc"
+      # extraVolumeMounts:
+      #   - name: "comdirect-data"
+      #     mountPath: "/opt/airflow/database/comdirect"
      
       logGroomerSidecar:
         enabled: true

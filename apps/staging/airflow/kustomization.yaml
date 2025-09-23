@@ -7,4 +7,4 @@ resources:
   - airflow-webserver-secret.yaml
   - airflow-worker-secrets.yaml
   - redis-password.yaml
-  - comdirect-data.yaml
+  # - comdirect-data.yaml
