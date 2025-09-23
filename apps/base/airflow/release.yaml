@@ -45,13 +45,13 @@ spec:
             tls:
               enabled: false
 
-    # Set static fernet key
+    # Set fernet key
     fernetKeySecretName: airflow-fernet-key
 
     # Set redis password
     redis:
-      # passwordSecretName: redis-password
-      password: "tmp-pw-testing"
+      passwordSecretName: redis-password
+      # password: "tmp-pw-testing"
 
     # Set webserver key
     webserverSecretKeySecretName: airflow-webserver-secret
@@ -76,38 +76,68 @@ spec:
       useHelmHooks: false
       applyCustomEnv: false
 
+    env:
+      - name: COMDIRECT__TURSO_PATH
+        value: "/opt/airflow/database/comdirect"
+    
+    secret:
+      - envName: COMDIRECT_CLIENT_ID
+        secretName: airflow-worker-secrets
+        secretKey: COMDIRECT_CLIENT_ID
+      - envName: COMDIRECT_CLIENT_SECRET
+        secretName: airflow-worker-secrets
+        secretKey: COMDIRECT_CLIENT_SECRET
+      - envName: COMDIRECT_USERNAME
+        secretName: airflow-worker-secrets
+        secretKey: COMDIRECT_USERNAME
+      - envName: COMDIRECT_PASSWORD
+        secretName: airflow-worker-secrets
+        secretKey: COMDIRECT_PASSWORD
+      - envName: TURSO_SYNC_URL
+        secretName: airflow-worker-secrets
+        secretKey: TURSO_SYNC_URL
+      - envName: TURSO_AUTH_TOKEN
+        secretName: airflow-worker-secrets
+        secretKey: TURSO_AUTH_TOKEN
+      - envName: ANTHROPIC_API_KEY
+        secretName: airflow-worker-secrets
+        secretKey: ANTHROPIC_API_KEY
+      - envName: LOGFIRE_TOKEN
+        secretName: airflow-worker-secrets
+        secretKey: LOGFIRE_TOKEN
 
-      # Volume claim templates for persistent SQLite storage
-      volumeClaimTemplates:
-        - metadata:
-            name: "comdirect-data"
-          spec:
-            storageClassName: "local-path"
-            accessModes:
-              - "ReadWriteOnce"
-            resources:
-              requests:
-                storage: "2Gi"
-      # Mount the SQLite volume
-      extraVolumeMounts:
-        - name: "comdirect-data"
-          mountPath: "/opt/airflow/database/comdirect"
+    # workers:
+    #   # Volume claim templates for persistent SQLite storage
+    #   volumeClaimTemplates:
+    #     - metadata:
+    #         name: "comdirect-data"
+    #       spec:
+    #         storageClassName: "local-path"
+    #         accessModes:
+    #           - "ReadWriteOnce"
+    #         resources:
+    #           requests:
+    #             storage: "2Gi"
+    #   # Mount the SQLite volume
+    #   extraVolumeMounts:
+    #     - name: "comdirect-data"
+    #       mountPath: "/opt/airflow/database/comdirect"
 
-      # Log groomer configuration for Airflow Celery workers
-      logGroomerSidecar:
-        enabled: true
-        retentionDays: 3
-        frequencyMinutes: 15
+    #   # Log groomer configuration for Airflow Celery workers
+    #   logGroomerSidecar:
+    #     enabled: true
+    #     retentionDays: 3
+    #     frequencyMinutes: 15
  
-      persistence:
-        enabled: true
-        size: 3Gi
+    #   persistence:
+    #     enabled: true
+    #     size: 3Gi
 
-      resources:
-        requests:
-          memory: 1Gi
-        limits:
-          memory: 2.5Gi
+    #   resources:
+    #     requests:
+    #       memory: 1Gi
+    #     limits:
+    #       memory: 2.5Gi
 
     # API Server configuration
     # apiServer:
@@ -121,50 +151,11 @@ spec:
 
     # Airflow scheduler configuration
     scheduler:
-      env:
-        - name: COMDIRECT__TURSO_PATH
-          value: "/opt/airflow/database/comdirect"
-        - name: COMDIRECT_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: COMDIRECT_CLIENT_ID
-        - name: COMDIRECT_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: COMDIRECT_CLIENT_SECRET
-        - name: COMDIRECT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: COMDIRECT_USERNAME
-        - name: COMDIRECT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: COMDIRECT_PASSWORD
-        - name: TURSO_SYNC_URL
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: TURSO_SYNC_URL
-        - name: TURSO_AUTH_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: TURSO_AUTH_TOKEN
-        - name: ANTHROPIC_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: ANTHROPIC_API_KEY
-        - name: LOGFIRE_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: airflow-worker-secrets
-              key: LOGFIRE_TOKEN
 
+      extraVolumeMounts:
+        - name: "comdirect-data-pvc"
+          mountPath: "/opt/airflow/database/comdirect"
+     
       logGroomerSidecar:
         enabled: true
         retentionDays: 3
