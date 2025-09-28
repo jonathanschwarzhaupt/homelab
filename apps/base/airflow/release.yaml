@@ -28,7 +28,7 @@ spec:
     images:
       airflow:
         repository: ghcr.io/jonathanschwarzhaupt/plumbing-airflow
-        tag: v0.3.3
+        tag: v0.4.0
     
     # Choice of executor - local for its simplicity and current requirements
     executor: "LocalExecutor"
@@ -161,14 +161,14 @@ spec:
      
       logGroomerSidecar:
         enabled: true
-        retentionDays: 3
+        retentionDays: 2
         frequencyMinutes: 15
 
     # Airflow triggerer configuration
     triggerer:
       logGroomerSidecar:
         enabled: true
-        retentionDays: 3
+        retentionDays: 2
         frequencyMinutes: 15
 
       persistence:
@@ -179,5 +179,5 @@ spec:
     dagProcessor:
       logGroomerSidecar:
         enabled: true
-        retentionDays: 3
+        retentionDays: 2
         frequencyMinutes: 15
