@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: onepassword
+  namespace: onepassword
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: connect
+      version: "2.x"
+      sourceRef:
+        kind: HelmRepository
+        name: onepassword
+        namespace: onepassword
+      interval: 12h
+
+  # Static Helm values (non-sensitive)
+  values:
+    operator:
+      create: true
+
+  # Secret values injected from Kubernetes Secret
+  # Equivalent to: helm install --set-file connect.credentials=... --set operator.token.value=...
+  valuesFrom:
+    # Injects the 1password-credentials.json content into connect.credentials
+    # valuesKey: the key in the K8s Secret to read from
+    # targetPath: the Helm value path to inject into
+    - kind: Secret
+      name: onepassword-credentials
+      valuesKey: connect.credentials
+      targetPath: connect.credentials
+    # Injects the connect token into operator.token.value
+    - kind: Secret
+      name: onepassword-credentials
+      valuesKey: operator.token.value
+      targetPath: operator.token.value
