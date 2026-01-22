@@ -22,12 +22,12 @@ spec:
             - name: LD_SUPERUSER_NAME
               valueFrom:
                 secretKeyRef:
-                  name: linkding-container-env
+                  name: linkding-container-env-secret
                   key: username
             - name: LD_SUPERUSER_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: linkding-container-env
+                  name: linkding-container-env-secret
                   key: password
 
           # envFrom:
