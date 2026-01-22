@@ -12,30 +12,41 @@ spec:
       labels:
         app: linkding
     spec:
-
       containers:
-      - name: linkding
-        image: sissbruecker/linkding:1.42.0
-        ports:
-        - containerPort: 9090
+        - name: linkding
+          image: sissbruecker/linkding:1.42.0
+          ports:
+            - containerPort: 9090
 
-        envFrom:
-        - secretRef:
-            name: linkding-container-env
+          env:
+            - name: LD_SUPERUSER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: linkding-container-env
+                  key: username
+            - name: LD_SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: linkding-container-env
+                  key: password
 
-        securityContext:
-          allowPrivilegeEscalation: false
+          # envFrom:
+          # - secretRef:
+          #     name: linkding-container-env
 
-        volumeMounts:
-        - mountPath: /etc/linkding/data
-          name: linkding-data
+          securityContext:
+            allowPrivilegeEscalation: false
+
+          volumeMounts:
+            - mountPath: /etc/linkding/data
+              name: linkding-data
 
       securityContext:
-        fsGroup: 33  # privilege for volume, set to www-data group ID
-        runAsUser: 33  # ID of www-data user
-        runAsGroup: 33  # Group ID of www-data user
+        fsGroup: 33 # privilege for volume, set to www-data group ID
+        runAsUser: 33 # ID of www-data user
+        runAsGroup: 33 # Group ID of www-data user
 
       volumes:
-      - name: linkding-data
-        persistentVolumeClaim:
-          claimName: linkding-data-pvc
+        - name: linkding-data
+          persistentVolumeClaim:
+            claimName: linkding-data-pvc
