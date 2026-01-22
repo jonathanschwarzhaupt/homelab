@@ -28,8 +28,10 @@ spec:
     # targetPath: the Helm value path to inject into
     - kind: Secret
       name: onepassword-credentials
-      valuesKey: connect.credentials
-      targetPath: connect.credentials
+      # valuesKey: connect.credentials
+      # targetPath: connect.credentials
+      valuesKey: connect.credentials_base64
+      targetPath: connect.credentials_base64
     # Injects the connect token into operator.token.value
     - kind: Secret
       name: onepassword-credentials
