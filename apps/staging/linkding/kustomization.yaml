@@ -3,7 +3,11 @@ kind: Kustomization
 namespace: linkding
 resources:
   - ../../base/linkding
-  - cloudflare.yaml
-  - cloudflare-secret.yaml
   - linkding-container-env-secret.yaml
-  - first-onepassword-secret.yaml
+  # - cloudflare.yaml
+  # - cloudflare-secret.yaml
+  # - first-onepassword-secret.yaml
+
+# https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#customizing
+patchesStrategicMerge:
+  - service_overlay.yaml
