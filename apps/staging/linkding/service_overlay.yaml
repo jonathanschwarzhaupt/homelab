@@ -4,6 +4,3 @@ metadata:
   name: linkding
   # annotations:
   #   tailscale.com/expose: "true"
-spec:
-  type: LoadBalancer
-  loadBalancerClass: tailscale
