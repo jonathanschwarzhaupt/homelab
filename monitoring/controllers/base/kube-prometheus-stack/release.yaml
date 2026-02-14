@@ -10,7 +10,7 @@ spec:
     spec:
       chart: kube-prometheus-stack
       # Let Flux update minor and patch versions
-      version: "66.x"
+      version: "81.x"
       # The repository to pull the chart from
       sourceRef:
         kind: HelmRepository
@@ -29,21 +29,5 @@ spec:
         target:
           kind: PrometheusRule
   values:
-    grafana:
-      adminPassword: password
-
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        hosts:
-          - grafana-staging.jonathanschwarzhaupt.net
-
-        path: /
-
-        ## TLS configuration for grafana Ingress
-        ## Secret must be manually created in the namespace
-        ##
-        tls:
-        - secretName: grafana-tls-secret
-          hosts:
-          - grafana-staging.jonathanschwarzhaupt.net
+    ingress:
+      enabled: false

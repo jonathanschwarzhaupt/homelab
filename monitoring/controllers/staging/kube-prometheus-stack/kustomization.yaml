@@ -3,3 +3,9 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ../../base/kube-prometheus-stack/
+  - ingress.yaml
+  - admin-pw-secret.yaml
+  - release-overlay.yaml
+
+patchesStrategicMerge:
+  - release-overlay.yaml
