@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: synology-csi
+  namespace: synology-csi
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: synology-csi
+      version: "0.x"
+      sourceRef:
+        kind: HelmRepository
+        name: synology-csi
+        namespace: synology-csi
+      interval: 12h
+  values:
+    clientInfoSecret:
+      name: synology-csi-client-info
