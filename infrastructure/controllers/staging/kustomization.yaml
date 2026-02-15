@@ -4,4 +4,4 @@ resources:
   - renovate
   - onepassword
   - tailscale
-  - synology
+  # - synology
