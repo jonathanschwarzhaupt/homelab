@@ -22,28 +22,28 @@ spec:
     # Configuration of the default storage classes
     storageClasses:
       # iSCSI storage classes
-      synology-iscsi-storage-delete:
+      isci-delete:
         disabled: false
         isDefault: true # Make this the default storage class
         reclaimPolicy: Delete
-        volumeBindingMode: WaitForFirstConsumer
+        volumeBindingMode: Immediate
         parameters:
           fsType: "ext4"
           dsm: "192.168.178.74"
           location: "/volume2"
 
-      synology-iscsi-storage-retain:
+      isci-retain:
         disabled: false
         isDefault: false
         reclaimPolicy: Retain
-        volumeBindingMode: WaitForFirstConsumer
+        volumeBindingMode: Immediate
         parameters:
           fsType: "ext4"
           dsm: "192.168.178.74"
           location: "/volume2"
 
       # NFS storage classes
-      synology-nfs-storage-delete:
+      nfs-delete:
         disabled: false
         isDefault: false
         reclaimPolicy: Delete
@@ -58,7 +58,7 @@ spec:
           - timeo=600
           - retrans=2
 
-      synology-nfs-storage-retain:
+      nfs-retain:
         disabled: false
         isDefault: false
         reclaimPolicy: Retain
@@ -74,8 +74,8 @@ spec:
           - retrans=2
 
       # Disable SMB storage classes since not needed
-      synology-smb-storage-delete:
+      smb-delete:
         disabled: true
 
-      synology-smb-storage-retain:
+      smb-retain:
         disabled: true
