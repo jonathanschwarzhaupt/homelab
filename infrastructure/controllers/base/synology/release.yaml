@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: synology-csi
-      version: "0.x"
+      version: "0.x.x"
       sourceRef:
         kind: HelmRepository
         name: synology-csi
@@ -16,4 +16,66 @@ spec:
       interval: 12h
   values:
     clientInfoSecret:
+      create: false
       name: synology-csi-client-info
+
+    # Configuration of the default storage classes
+    storageClasses:
+      # iSCSI storage classes
+      synology-iscsi-storage-delete:
+        disabled: false
+        isDefault: true # Make this the default storage class
+        reclaimPolicy: Delete
+        volumeBindingMode: WaitForFirstConsumer
+        parameters:
+          fsType: "ext4"
+          dsm: "192.168.178.74"
+          location: "/volume2"
+
+      synology-iscsi-storage-retain:
+        disabled: false
+        isDefault: false
+        reclaimPolicy: Retain
+        volumeBindingMode: WaitForFirstConsumer
+        parameters:
+          fsType: "ext4"
+          dsm: "192.168.178.74"
+          location: "/volume2"
+
+      # NFS storage classes
+      synology-nfs-storage-delete:
+        disabled: false
+        isDefault: false
+        reclaimPolicy: Delete
+        parameters:
+          protocol: "nfs"
+          dsm: "192.168.178.74"
+          location: "/volume2"
+          mountPermissions: "0755"
+        mountOptions:
+          - nfsvers=4.1
+          - hard
+          - timeo=600
+          - retrans=2
+
+      synology-nfs-storage-retain:
+        disabled: false
+        isDefault: false
+        reclaimPolicy: Retain
+        parameters:
+          protocol: "nfs"
+          dsm: "192.168.178.74"
+          location: "/volume2"
+          mountPermissions: "0755"
+        mountOptions:
+          - nfsvers=4.1
+          - hard
+          - timeo=600
+          - retrans=2
+
+      # Disable SMB storage classes since not needed
+      synology-smb-storage-delete:
+        disabled: true
+
+      synology-smb-storage-retain:
+        disabled: true
