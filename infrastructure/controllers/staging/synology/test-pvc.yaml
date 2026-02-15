@@ -1,3 +1,4 @@
+# apply manually to test using: kubectl apply -f test-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
