@@ -22,7 +22,7 @@ spec:
     # Configuration of the default storage classes
     storageClasses:
       # iSCSI storage classes
-      isci-delete:
+      iscsi-delete:
         disabled: false
         isDefault: true # Make this the default storage class
         reclaimPolicy: Delete
@@ -32,7 +32,7 @@ spec:
           dsm: "192.168.178.74"
           location: "/volume2"
 
-      isci-retain:
+      iscsi-retain:
         disabled: false
         isDefault: false
         reclaimPolicy: Retain
