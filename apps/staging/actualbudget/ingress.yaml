@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: actualbudget
+spec:
+  defaultBackend:
+    service:
+      name: actualbudget
+      port:
+        number: 5006
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - budget
