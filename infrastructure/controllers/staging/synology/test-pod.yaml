@@ -1,0 +1,22 @@
+# apply manually to test using: kubectl apply -f test-pod.yaml
+# Test the pvc and deletion by following along:
+# https://thedatabaseme.de/2023/09/08/csi-synology-using-synology-csi-driver-in-kubernetes-to-do-snapshots/
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-nfs-pod
+  namespace: default
+spec:
+  volumes:
+    - name: test-nfs-pvc
+      persistentVolumeClaim:
+        claimName: test-nfs-pvc
+  containers:
+    - name: test-nfs-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: test-nfs-pvc
