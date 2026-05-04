@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gizmosql
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: gizmosql
+  template:
+    metadata:
+      labels:
+        app: gizmosql
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1000
+      containers:
+        - name: gizmosql
+          image: gizmodata/gizmosql:v1.22.4
+          args:
+            - "--health-port=8080"
+            - "--query-timeout=180"
+          ports:
+          - name: flight
+            containerPort: 31337
+          - name: health
+            containerPort: 8080
+
+          env:
+            - name: GIZMOSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: gizmosql-creds
+                  key: username
+            - name: GIZMOSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gizmosql-creds
+                  key: password
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: gizmosql-creds
+                  key: secret-key
+            - name: TLS_ENABLED
+              value: "0"
+            - name: DATABASE_FILENAME
+              value: data/dwh.duckdb
+
+          resources:
+            requests:
+              cpu: "500mi"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+
+          readinessProbe:
+            grpc: 
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            grpc:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+
+
+
+          securityContext:
+            allowPrivilegeEscalation: false
+
+          volumeMounts:
+            - mountPath: /opt/gizmosql/data
+              name: gizmosql-data
+
+      volumes:
+        - name: gizmosql-data
+          persistentVolumeClaim:
+            claimName: gizmosql-data-pvc
