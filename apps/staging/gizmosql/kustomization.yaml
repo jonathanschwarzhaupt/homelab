@@ -5,7 +5,6 @@ resources:
   - ../../base/gizmosql
   - secret.yaml
   - storage.yaml
-  - service_overlay.yaml
 
 patchesStrategicMerge:
   - service_overlay.yaml
