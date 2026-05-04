@@ -22,11 +22,6 @@ spec:
       containers:
         - name: gizmosql
           image: gizmodata/gizmosql:v1.22.4
-          args:
-            - "--health-port"
-            - "8080"
-            - "--query-timeout"
-            - "180"
           ports:
           - name: flight
             containerPort: 31337
@@ -53,6 +48,10 @@ spec:
               value: "0"
             - name: DATABASE_FILENAME
               value: data/dwh.duckdb
+            - name: QUERY_TIMEOUT
+              value: "180"
+            - name: HEALTH_PORT
+              value: "8080"
 
           resources:
             requests:
