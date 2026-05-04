@@ -5,3 +5,4 @@ resources:
   - onepassword
   - tailscale
   - synology
+  - gizmosql

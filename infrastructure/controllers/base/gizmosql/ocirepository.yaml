@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: gizmosql-operator
+  namespace: gizmosql-system
+spec:
+  interval: 1h
+  url: oci://registry-1.docker.io/gizmodata/gizmosql-operator-chart
+  ref:
+    tag: 0.1.0
