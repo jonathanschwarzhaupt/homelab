@@ -28,7 +28,7 @@ spec:
 
           containers:
             - name: comdirect-auth
-              image: jonathanschwarzhaupt/comdirect-auth:v0.1.0
+              image: ghcr.io/jonathanschwarzhaupt/comdirect-auth:v0.1.0
               imagePullPolicy: IfNotPresent
 
               env:
