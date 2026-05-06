@@ -28,7 +28,7 @@ spec:
 
           containers:
             - name: comdirect-auth
-              image: ghcr.io/jonathanschwarzhaupt/comdirect-auth:v0.1.0
+              image: ghcr.io/jonathanschwarzhaupt/comdirect-auth:v0.1.1
               imagePullPolicy: IfNotPresent
 
               env:
@@ -52,16 +52,13 @@ spec:
                     secretKeyRef:
                       name: comdirect-creds
                       key: COMDIRECT_CLIENT_SECRET
-                - name: OP_SERVICE_ACCOUNT_TOKEN
+                - name: FERNET_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: op-service-account-apps-rw-creds
-                      key: OP_SERVICE_ACCOUNT_TOKEN
-                - name: OP_VAULT_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: op-service-account-apps-rw-creds
-                      key: OP_VAULT_ID
+                      name: comdirect-creds
+                      key: FERNET_KEY
+                - name: TOKEN_FILE_PATH
+                  value: /data/token.json
 
               resources:
                 requests:
@@ -72,7 +69,12 @@ spec:
                   memory: 128Mi
 
               securityContext:
-                allowPrivilegeEscalation: false
-                readOnlyRootFilesystem: true
-                capabilities:
-                  drop: ["ALL"]
+
+              volumeMounts:
+                - mountPath: /data
+                  name: comdirect-data
+
+          volumes:
+            - name: comdirect-data
+              persistentVolumeClaim:
+                claimName: comdirect-data-pvc
