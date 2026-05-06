@@ -35,27 +35,27 @@ spec:
                 - name: COMDIRECT_USERNAME
                   valueFrom:
                     secretKeyRef:
-                      name: comdirect-creds
+                      name: comdirect-creds-2
                       key: COMDIRECT_USERNAME
                 - name: COMDIRECT_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: comdirect-creds
+                      name: comdirect-creds-2
                       key: COMDIRECT_PASSWORD
                 - name: COMDIRECT_CLIENT_ID
                   valueFrom:
                     secretKeyRef:
-                      name: comdirect-creds
+                      name: comdirect-creds-2
                       key: COMDIRECT_CLIENT_ID
                 - name: COMDIRECT_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
-                      name: comdirect-creds
+                      name: comdirect-creds-2
                       key: COMDIRECT_CLIENT_SECRET
                 - name: FERNET_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: comdirect-creds
+                      name: comdirect-creds-2
                       key: FERNET_KEY
                 - name: TOKEN_FILE_PATH
                   value: /data/token.json
