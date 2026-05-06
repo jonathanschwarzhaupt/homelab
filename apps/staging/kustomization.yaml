@@ -5,5 +5,5 @@ resources:
   - mealie
   - actualbudget
   - gizmosql
-  # - comdirect
+  - comdirect
   # - airflow
