@@ -1,0 +1,21 @@
+# one-off pod for fixing permissions on pvc
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chown-comdirect
+  namespace: comdirect
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 0 # root, just for this one-shot
+  containers:
+    - name: fix
+      image: busybox
+      command: ["sh", "-c", "chown -R 1000:1000 /data && ls -la /data"]
+      volumeMounts:
+        - mountPath: /data
+          name: data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: comdirect-data-pvc
