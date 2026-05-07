@@ -11,7 +11,8 @@ spec:
   containers:
     - name: fix
       image: busybox
-      command: ["sh", "-c", "chown -R 1000:1000 /data && ls -la /data"]
+      # command: ["sh", "-c", "chown -R 1000:1000 /data && ls -la /data"]
+      command: ["sleep", "infinity"]
       volumeMounts:
         - mountPath: /data
           name: data

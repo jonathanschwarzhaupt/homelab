@@ -30,7 +30,7 @@ spec:
 
           containers:
             - name: comdirect-auth
-              image: ghcr.io/jonathanschwarzhaupt/comdirect-auth:v0.1.1
+              image: ghcr.io/jonathanschwarzhaupt/comdirect-auth:v0.1.2
               imagePullPolicy: IfNotPresent
 
               env:
