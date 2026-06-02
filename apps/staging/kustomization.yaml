@@ -6,4 +6,5 @@ resources:
   - actualbudget
   - gizmosql
   - comdirect
+  - obsidian-livesync
   # - airflow

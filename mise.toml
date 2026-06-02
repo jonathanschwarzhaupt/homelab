@@ -1,2 +1,4 @@
 [tools]
+claude = "latest"
+cloudflared = "latest"
 k9s = "latest"

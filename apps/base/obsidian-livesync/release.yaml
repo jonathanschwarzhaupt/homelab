@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: obsidian-livesync
+  namespace: obsidian-livesync
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: couchdb
+      version: "4.6.3"
+      sourceRef:
+        kind: HelmRepository
+        name: couchdb
+        namespace: obsidian-livesync
+      interval: 24h
+
+  valuesFrom:
+    - kind: Secret
+      name: couchdb-credentials
+      valuesKey: username
+      targetPath: adminUsername
+    - kind: Secret
+      name: couchdb-credentials
+      valuesKey: password
+      targetPath: adminPassword
+    - kind: Secret
+      name: couchdb-credentials
+      valuesKey: cookieAuthSecret
+      targetPath: cookieAuthSecret
+    - kind: Secret
+      name: couchdb-credentials
+      valuesKey: erlangCookie
+      targetPath: erlangCookie
+
+  values:
+    clusterSize: 1
+    createAdminSecret: true
+
+    persistentVolume:
+      enabled: true
+      size: 10Gi
+      storageClass: synology-csi-nfs-retain
+
+    couchdbConfig:
+      chttpd:
+        require_valid_user: true
+        enable_cors: true
+        max_http_request_size: 4294967296
+      chttpd_auth:
+        require_valid_user: true
+      httpd:
+        WWW-Authenticate: 'Basic realm="couchdb"'
+        enable_cors: true
+      couchdb:
+        max_document_size: 50000000
+      cors:
+        credentials: true
+        origins: "app://obsidian.md,capacitor://localhost,http://localhost"
+
+    autoSetup:
+      enabled: true
+      defaultDatabases:
+        - _global_changes
+        - obsidian
