@@ -54,6 +54,7 @@ spec:
         enable_cors: true
       couchdb:
         max_document_size: 50000000
+        uuid: 5d0aeb30-b9ae-4567-9852-8c76361d2d81
       cors:
         credentials: true
         origins: "app://obsidian.md,capacitor://localhost,http://localhost"
