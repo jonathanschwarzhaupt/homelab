@@ -22,7 +22,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: gizmosql
-          image: gizmodata/gizmosql:v1.22.4
+          image: gizmodata/gizmosql:v1.30.0
           ports:
           - name: flight
             containerPort: 31337
