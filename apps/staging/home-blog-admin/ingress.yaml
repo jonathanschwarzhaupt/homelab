@@ -5,7 +5,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: home-blog-admin
+      name: home-blog
       port:
         number: 4000
   ingressClassName: tailscale
