@@ -7,4 +7,5 @@ resources:
   - gizmosql
   - comdirect
   - obsidian-livesync
+  - home-blog-admin
   # - airflow
