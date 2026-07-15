@@ -78,6 +78,8 @@ spec:
       initContainers:
         - name: db-migrations
           image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:latest
+          args:
+            - "up"
           env:
             - name: BLOG_DB_DSN
               valueFrom:
