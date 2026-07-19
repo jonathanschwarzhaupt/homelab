@@ -5,7 +5,7 @@ resources:
   - mealie
   - actualbudget
   - gizmosql
-  - comdirect
+  # - comdirect
   - obsidian-livesync
   - home-blog-admin
   # - airflow
