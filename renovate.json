@@ -1,15 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "kubernetes": {
-    "fileMatch": ["\\.yaml$"]
+    "managerFilePatterns": ["/\\.ya?ml$/"]
   },
   "packageRules": [
     {
+      "matchDatasources": ["docker"],
       "matchPackageNames": [
         "ghcr.io/jonathanschwarzhaupt/home-blog",
         "ghcr.io/jonathanschwarzhaupt/home-blog-migrate"
       ],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-dev\\.(?<build>\\d+)\\.(?<compatibility>[0-9a-f]+)$"
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-dev\\.(?<build>\\d+)\\.[0-9a-f]+$"
     }
   ]
 }
