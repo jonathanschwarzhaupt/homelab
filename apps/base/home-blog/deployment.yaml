@@ -26,7 +26,7 @@ spec:
       #   fsGroup: 1000
       containers:
         - name: home-blog
-          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.3.0-dev.5.195e47c 
+          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.3.0-dev.6.98ce139 
           args: 
             - "-features=$(FEATURES)"
           ports:
