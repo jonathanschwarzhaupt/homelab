@@ -8,4 +8,5 @@ resources:
   # - comdirect
   - obsidian-livesync
   - home-blog-admin
+  - home-blog-public
   # - airflow
