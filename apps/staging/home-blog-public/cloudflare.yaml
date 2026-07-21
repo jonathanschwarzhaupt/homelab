@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: home-blog-public
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudflared
+  template:
+    metadata:
+      labels:
+        app: cloudflared
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:2026.7.2
+          args:
+            - tunnel
+            - --config
+            - /etc/cloudflared/config/config.yaml
+            - run
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            failureThreshold: 1
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cloudflared/config
+              readOnly: true
+            - name: creds
+              mountPath: /etc/cloudflared/creds
+              readOnly: true
+      volumes:
+        - name: creds
+          secret:
+            secretName: tunnel-credentials
+        - name: config
+          configMap:
+            name: cloudflared
+            items:
+              - key: config.yaml
+                path: config.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared
+  namespace: obsidian-livesync
+data:
+  config.yaml: |
+    # Name of the tunnel you want to run
+    
+    tunnel: home-blog-public
+
+    credentials-file: /etc/cloudflared/creds/credentials.json
+
+    # Serves the metrics server under /metrics and the readiness server under /ready
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    
+    # tell cloudflare to route traffic "from hostname to service"
+    ingress:
+    # Needs to exactly match the host configured in DNS records
+    - hostname: blog.jonathanschwarzhaupt.net
+      # Uses K8s internal DNS to resolve the service
+      service: http://home-blog:4000
+
+    # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
+    # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
+    # in the connection from cloudflared to your local service, not from the internet to cloudflared.
+    - hostname: hello.example.com
+      service: hello_world
+    # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
+    - service: http_status:404
+
