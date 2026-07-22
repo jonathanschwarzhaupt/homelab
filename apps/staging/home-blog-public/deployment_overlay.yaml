@@ -14,4 +14,4 @@ spec:
               valueFrom: null
       initContainers:
         - name: db-migrations
-          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:v0.3.0
+          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:v0.3.1
