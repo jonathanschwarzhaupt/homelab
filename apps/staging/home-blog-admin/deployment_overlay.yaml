@@ -7,11 +7,11 @@ spec:
     spec:
       containers:
         - name: home-blog
-          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.4.0-dev.11.6f493d7
+          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.4.0-dev.14.dc19ae9
           env:
             - name: FEATURES
               value: ""
               valueFrom: null
       initContainers:
         - name: db-migrations
-          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.0-dev.11.6f493d7
+          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.0-dev.14.dc19ae9
