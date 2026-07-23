@@ -29,6 +29,7 @@ spec:
           image: ghcr.io/jonathanschwarzhaupt/home-blog:v0.3.2
           args: 
             - "-features=$(FEATURES)"
+            - "-base-url=$(BASE_URL)"
           ports:
           - name: app
             containerPort: 4000
@@ -45,6 +46,11 @@ spec:
                 configMapKeyRef:
                   name: home-blog-config
                   key: features
+            - name: BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-blog-config
+                  key: base_url
           resources:
             requests:
               cpu: "200m"

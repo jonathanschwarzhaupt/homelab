@@ -4,3 +4,4 @@ metadata:
   name: home-blog-config
 data:
   features: ""
+  base_url: "https://blog.jonathanschwarzhaupt.net"
