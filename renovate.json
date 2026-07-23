@@ -3,7 +3,6 @@
   "kubernetes": {
     "managerFilePatterns": ["/\\.ya?ml$/"]
   },
-{
   "packageRules": [
     {
       "matchDatasources": ["docker"],
@@ -11,7 +10,7 @@
         "ghcr.io/jonathanschwarzhaupt/home-blog",
         "ghcr.io/jonathanschwarzhaupt/home-blog-migrate"
       ],
-      "matchFileNames": ["apps/base/home-blog/deployment.yaml"],
+      "matchFileNames": ["apps/staging/home-blog-admin/*.yaml"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-dev\\.(?<build>\\d+)\\.[0-9a-f]+$",
       "automerge": true,
       "automergeType": "branch"
