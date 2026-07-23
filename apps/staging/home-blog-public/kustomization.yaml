@@ -4,8 +4,6 @@ namespace: home-blog-public
 resources:
   - ../../base/home-blog
   - secret.yaml
+  - configmap.yaml
   - cloudflare.yaml
   - cloudflare-secret.yaml
-
-patchesStrategicMerge:
-  - deployment_overlay.yaml
