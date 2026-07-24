@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: home-blog
-          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.4.0-dev.14.dc19ae9
+          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.4.0-rc.5.1c4c232
       initContainers:
         - name: db-migrations
-          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.0-dev.14.dc19ae9
+          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.0-rc.5.1c4c232
