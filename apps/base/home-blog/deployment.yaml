@@ -83,7 +83,7 @@ spec:
             allowPrivilegeEscalation: false
       initContainers:
         - name: db-migrations
-          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:v0.4.0
+          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:v0.4.1
           args:
             - "up"
           env:
