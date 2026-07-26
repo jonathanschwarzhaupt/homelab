@@ -1,0 +1,10 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: home-finance-db-monitoring
+spec:
+  selector:
+    matchLabels:
+      cnpg.io/cluster: home-finance
+  podMetricsEndpoints:
+  - port: metrics
