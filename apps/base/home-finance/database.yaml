@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: home-finance
+spec:
+  instances: 3
+
+  bootstrap:
+    initdb:
+      database: comdirect
+      owner: comdirect
+      secret:
+        name: comdirect-db-credentials
+
+  storage:
+    size: 1Gi
+    storageClass: synology-csi-iscsi-retain

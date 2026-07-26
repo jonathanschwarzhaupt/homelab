@@ -9,4 +9,5 @@ resources:
   - obsidian-livesync
   - home-blog-admin
   - home-blog-public
+  - home-finance
   # - airflow
