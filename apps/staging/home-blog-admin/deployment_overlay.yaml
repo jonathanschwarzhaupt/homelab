@@ -8,6 +8,18 @@ spec:
       containers:
         - name: home-blog
           image: ghcr.io/jonathanschwarzhaupt/home-blog:0.4.1-rc.10.71fafb9
+          env:
+            - name: BLOG_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: home-blog-app
+                  key: fqdn-uri
       initContainers:
         - name: db-migrations
           image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.1-rc.10.71fafb9
+          env:
+            - name: BLOG_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: home-blog-app
+                  key: fqdn-uri
