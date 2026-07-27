@@ -6,6 +6,8 @@ resources:
   - configmap.yaml
   - secret.yaml
   - ingress.yaml
+  - database.yaml
+  - podmonitor.yaml
 
 patchesStrategicMerge:
   - deployment_overlay.yaml

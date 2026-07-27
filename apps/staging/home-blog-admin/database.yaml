@@ -1,0 +1,22 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: home-blog
+spec:
+  instances: 3
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  bootstrap:
+    initdb:
+      database: blog
+      owner: blog
+
+  storage:
+    size: 1Gi
+    storageClass: synology-csi-iscsi-retain
