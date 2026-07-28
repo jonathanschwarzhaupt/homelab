@@ -6,4 +6,5 @@ resources:
   - tailscale
   - synology
   - cnpg
+  - cert-manager
   # - gizmosql
