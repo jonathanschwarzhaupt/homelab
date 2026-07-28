@@ -1,6 +1,8 @@
 resources:
   - ../home-blog/
 
+nameSuffix: -private
+
 patches:
   - path: private-deployment.yaml
     target:

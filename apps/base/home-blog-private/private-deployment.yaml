@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: home-blog-private
+  name: home-blog
 spec:
   selector:
     matchLabels:

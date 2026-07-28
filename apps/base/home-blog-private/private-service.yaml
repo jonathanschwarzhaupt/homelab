@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-blog-private
+  name: home-blog
 spec:
   ports:
     - port: 4000
