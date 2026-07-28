@@ -20,11 +20,11 @@ spec:
                   name: home-blog-app
                   key: fqdn-uri
             - name: FEATURES
-              $patch: replace
               value: ""
+              valueFrom: null
             - name: BASE_URL
-              $patch: replace
               value: "https://blog.jonathanschwarzhaupt.net"
+              valueFrom: null
       initContainers:
         - name: db-migrations
           env:
