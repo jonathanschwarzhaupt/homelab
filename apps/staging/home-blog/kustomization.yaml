@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: home-blog
+resources:
+  - ../../base/home-blog/overlays/private/
+  - ../../base/home-blog/overlays/public/
+  - database.yaml
+  - podmonitor.yaml
+  - private-ingress.yaml
+  - public-cloudflare-secret.yaml
+  - public-cloudflare.yaml

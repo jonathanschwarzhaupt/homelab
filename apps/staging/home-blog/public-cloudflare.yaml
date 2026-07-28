@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudflared
-  namespace: home-blog-public
+  # namespace: home-blog
 spec:
   replicas: 2
   selector:
@@ -50,7 +50,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cloudflared
-  namespace: obsidian-livesync
+  # namespace: home-blog
 data:
   config.yaml: |
     # Name of the tunnel you want to run
@@ -68,7 +68,7 @@ data:
     # Needs to exactly match the host configured in DNS records
     - hostname: blog.jonathanschwarzhaupt.net
       # Uses K8s internal DNS to resolve the service
-      service: http://home-blog:4000
+      service: http://home-blog-public:4000
 
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is

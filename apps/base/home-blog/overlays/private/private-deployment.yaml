@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-blog-private
+spec:
+  selector:
+    matchLabels:
+      app: home-blog-private
+  template:
+    metadata:
+      labels:
+        app: home-blog-private
+    spec:
+      containers:
+        - name: home-blog
+          image: ghcr.io/jonathanschwarzhaupt/home-blog:0.4.1-rc.10.71fafb9
+          env:
+            - name: BLOG_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: home-blog-app
+                  key: fqdn-uri
+            - name: FEATURES
+              value: "admin"
+      initContainers:
+        - name: db-migrations
+          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.1-rc.10.71fafb9
+          env:
+            - name: BLOG_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: home-blog-app
+                  key: fqdn-uri

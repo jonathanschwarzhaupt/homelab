@@ -1,0 +1,12 @@
+resources:
+  - ../..  # base/home-blog
+
+patches:
+  - path: public-deployment.yaml
+    target:
+      kind: Deployment
+      name: home-blog
+  - path: public-service.yaml
+    target:
+      kind: Service
+      name: home-blog
