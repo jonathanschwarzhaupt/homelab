@@ -10,7 +10,7 @@
         "ghcr.io/jonathanschwarzhaupt/home-blog",
         "ghcr.io/jonathanschwarzhaupt/home-blog-migrate"
       ],
-      "matchFileNames": ["apps/base/home-blog-admin/home-blog-private/private-deployment.yaml"],
+      "matchFileNames": ["apps/base/home-blog-private/private-deployment.yaml"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-rc\\.(?<build>\\d+)\\.[0-9a-f]+$",
       "automerge": true,
       "automergeType": "branch"
