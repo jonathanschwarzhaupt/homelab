@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: home-blog
 spec:
-  instances: 3
+  instances: 1
   resources:
     requests:
       memory: "256Mi"
