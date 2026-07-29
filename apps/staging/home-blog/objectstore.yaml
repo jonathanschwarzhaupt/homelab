@@ -1,0 +1,15 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: home-blog-objectstore
+spec:
+  configuration:
+    destinationPath: "https://jonathanhomelab.blob.core.windows.net/home-blog"
+    azureCredentials:
+      storageAccount:
+        name: home-blog-backup-creds
+        key: STORAGE_ACCOUNT_NAME
+      storageSasToken:
+        name: home-blog-backup-creds
+        key: STORAGE_ACCOUNT_SAS_TOKEN
+  retentionPolicy: "14d"
