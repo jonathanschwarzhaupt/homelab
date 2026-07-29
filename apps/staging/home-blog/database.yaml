@@ -20,3 +20,9 @@ spec:
   storage:
     size: 1Gi
     storageClass: synology-csi-iscsi-retain
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWalArchiver: true
+      parameters:
+        barmanObjectName: home-blog-objectstore
