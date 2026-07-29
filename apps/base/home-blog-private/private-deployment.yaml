@@ -28,7 +28,7 @@ spec:
               valueFrom: null
       initContainers:
         - name: db-migrations
-          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.4.1-rc.10.71fafb9
+          image: ghcr.io/jonathanschwarzhaupt/home-blog-migrate:0.5.0-rc.13.27c485b
           env:
             - name: BLOG_DB_DSN
               valueFrom:
