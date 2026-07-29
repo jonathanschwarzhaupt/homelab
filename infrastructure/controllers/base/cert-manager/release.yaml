@@ -5,15 +5,10 @@ metadata:
   namespace: cert-manager
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: cert-manager
-      version: "1.21.x"
-      sourceRef:
-        kind: OCIRepository
-        name: cert-manager
-        namespace: cert-manager
-      interval: 12h
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager
+    namespace: cert-manager
   values:
     crds:
       enabled: true
