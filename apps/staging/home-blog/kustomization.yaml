@@ -6,7 +6,7 @@ resources:
   - ../../base/home-blog-private/
   - ../../base/home-blog-public/
   - database.yaml
-  - objectstore-secret.yaml
+  # - objectstore-secret.yaml
   - objectstore.yaml
   - podmonitor.yaml
   - private-ingress.yaml
