@@ -23,6 +23,6 @@ spec:
 
   plugins:
     - name: barman-cloud.cloudnative-pg.io
-      isWalArchiver: true
+      isWALArchiver: true
       parameters:
         barmanObjectName: home-blog-objectstore
