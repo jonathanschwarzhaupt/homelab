@@ -8,7 +8,8 @@ resources:
   - database.yaml
   - objectstore-secret.yaml
   - objectstore.yaml
-  - podmonitor.yaml
+  - podmonitor-app.yaml
+  - podmonitor-db.yaml
   - private-ingress.yaml
   - public-cloudflare-secret.yaml
   - public-cloudflare.yaml
