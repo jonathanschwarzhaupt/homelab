@@ -3,10 +3,10 @@ kind: ScheduledBackup
 metadata:
   name: home-blog-db-backup
 spec:
-  schedule: "0 0 3 * * *"  # At 3 a.m. every day
-  backupOwnerReference: cluster
   cluster:
     name: home-blog
-  method: cluster
+  schedule: "0 0 3 * * *"  # At 3 a.m. every day
+  backupOwnerReference: cluster
+  method: plugin
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io
