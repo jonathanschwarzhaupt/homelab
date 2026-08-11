@@ -7,3 +7,6 @@ spec:
   backupOwnerReference: cluster
   cluster:
     name: home-blog
+  method: cluster
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
