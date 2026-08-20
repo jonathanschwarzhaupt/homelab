@@ -26,7 +26,7 @@ spec:
       #   fsGroup: 1000
       containers:
         - name: home-blog
-          image: ghcr.io/jonathanschwarzhaupt/home-blog:v0.5.2
+          image: ghcr.io/jonathanschwarzhaupt/home-blog:v0.5.3
           args: 
             - "-features=$(FEATURES)"
             - "-base-url=$(BASE_URL)"
