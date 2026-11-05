@@ -20,6 +20,7 @@ spec:
       # kube-prometheus-stack only selects monitors with this label
       podMonitorAdditionalLabels:
         release: kube-prometheus-stack
-      # picked up by the Grafana sidecar, which watches all namespaces
+      # the bundled dashboard ignores barman-cloud plugin backup metrics;
+      # monitoring/configs/staging/dashboards provides a current one
       grafanaDashboard:
-        create: true
+        create: false
