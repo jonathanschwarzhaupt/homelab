@@ -1,0 +1,55 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: home-app
+spec:
+  image: ghcr.io/jonathanschwarzhaupt/home-app
+  interval: 1m
+  secretRef:
+    name: ghcr-pull
+---
+# Tags are main-<commit time UTC, YYYYMMDDHHmmss>-<sha7>; the newest wins.
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: home-app
+spec:
+  imageRepositoryRef:
+    name: home-app
+  filterTags:
+    pattern: '^main-(?P<ts>[0-9]{14})-[0-9a-f]{7}$'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
+---
+# Commits the new tag into this overlay's kustomization.yaml on main.
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: home-app
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: |
+        chore(home-app-staging): update image
+
+        {{ range .Changed.Changes -}}
+        - {{ .OldValue }} -> {{ .NewValue }}
+        {{ end -}}
+    push:
+      branch: main
+  update:
+    path: ./apps/staging/home-app-staging
+    strategy: Setters

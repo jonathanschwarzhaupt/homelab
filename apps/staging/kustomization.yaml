@@ -8,5 +8,6 @@ resources:
   # - comdirect
   - obsidian-livesync
   - home-blog
+  - home-app-staging
   # - home-finance
   # - airflow
