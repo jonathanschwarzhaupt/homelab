@@ -17,3 +17,9 @@ spec:
   values:
     monitoring:
       podMonitorEnabled: true
+      # kube-prometheus-stack only selects monitors with this label
+      podMonitorAdditionalLabels:
+        release: kube-prometheus-stack
+      # picked up by the Grafana sidecar, which watches all namespaces
+      grafanaDashboard:
+        create: true
