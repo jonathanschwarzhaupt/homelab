@@ -14,3 +14,20 @@ configMapGenerator:
   - name: cnpg-grafana-dashboard
     files:
       - cnpg.json
+  # dotdc/grafana-dashboards-kubernetes v3.0.8 (grafana.com 15757-15760)
+  - name: k8s-views-global
+    files:
+      - k8s-views-global.json
+  - name: k8s-views-namespaces
+    files:
+      - k8s-views-namespaces.json
+  - name: k8s-views-nodes
+    files:
+      - k8s-views-nodes.json
+  - name: k8s-views-pods
+    files:
+      - k8s-views-pods.json
+  # rfmoz/grafana-dashboards@b07d8a9 (grafana.com 1860)
+  - name: node-exporter-full
+    files:
+      - node-exporter-full.json
