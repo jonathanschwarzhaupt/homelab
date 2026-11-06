@@ -16,4 +16,4 @@ configMapGenerator:
       - config.env
 images:
   - name: ghcr.io/jonathanschwarzhaupt/home-app
-    newTag: main-20261106130713-70f4fc7 # {"$imagepolicy": "home-app-staging:home-app:tag"}
+    newTag: main-20261106194739-679d985 # {"$imagepolicy": "home-app-staging:home-app:tag"}
