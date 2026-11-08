@@ -8,13 +8,20 @@ spec:
   chart:
     spec:
       chart: synology-csi
-      version: "0.x.x"
+      # exact pin: 0.x.x auto-installed chart updates, including a broken one
+      version: "0.11.4"
       sourceRef:
         kind: HelmRepository
         name: synology-csi
         namespace: synology-csi
       interval: 12h
   values:
+    images:
+      plugin:
+        # the chart defaults to its appVersion v1.4.0, which is not published
+        # on Docker Hub; the chart README documents pinning v1.3.1
+        tag: v1.3.1
+
     clientInfoSecret:
       create: false
       name: synology-csi-client-info
