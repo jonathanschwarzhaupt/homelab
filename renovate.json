@@ -1,5 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "timezone": "Europe/Berlin",
   "kubernetes": {
     "managerFilePatterns": ["/\\.ya?ml$/"]
   },
@@ -12,6 +13,15 @@
       ],
       "matchFileNames": ["apps/base/home-blog-private/private-deployment.yaml"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-rc\\.(?<build>\\d+)\\.[0-9a-f]+$",
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "description": "Update Renovate's own image once a week, after a release has been out for 3 days",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["renovate/renovate"],
+      "schedule": ["* 0-5 * * 1"],
+      "minimumReleaseAge": "3 days",
       "automerge": true,
       "automergeType": "branch"
     }
