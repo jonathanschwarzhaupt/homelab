@@ -1,0 +1,16 @@
+# Only the database is backed up; uploaded images live on the retain PVC.
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: norish-objectstore
+spec:
+  configuration:
+    destinationPath: "https://jonathanhomelab.blob.core.windows.net/norish"
+    azureCredentials:
+      storageAccount:
+        name: norish-secrets
+        key: STORAGE_ACCOUNT_NAME
+      storageSasToken:
+        name: norish-secrets
+        key: STORAGE_ACCOUNT_SAS_TOKEN
+  retentionPolicy: "14d"

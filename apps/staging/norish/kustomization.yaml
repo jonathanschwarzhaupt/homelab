@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: norish
+resources:
+  - namespace.yaml
+  - ../../base/norish
+  - secrets.yaml
+  - database.yaml
+  - objectstore.yaml
+  - scheduled-backup.yaml
+  - podmonitor-db.yaml
+  - cloudflare.yaml
+# the hash suffix restarts the pod when the config changes
+configMapGenerator:
+  - name: norish-config
+    envs:
+      - config.env

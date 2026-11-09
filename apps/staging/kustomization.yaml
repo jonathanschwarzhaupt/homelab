@@ -9,5 +9,6 @@ resources:
   - obsidian-livesync
   - home-blog
   - home-app-staging
+  - norish
   # - home-finance
   # - airflow

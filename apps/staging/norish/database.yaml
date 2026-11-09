@@ -1,0 +1,31 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: norish-db
+spec:
+  # single node cluster: more instances would add no availability
+  instances: 1
+  # the major version Norish ships its compose example with
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.11-system-trixie
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+
+  bootstrap:
+    initdb:
+      database: norish
+      owner: norish
+
+  # the storage class allows expansion: raise the size to grow in place
+  storage:
+    size: 1Gi
+    storageClass: synology-csi-iscsi-retain
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: norish-objectstore

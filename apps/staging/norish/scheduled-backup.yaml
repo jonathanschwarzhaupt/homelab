@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: norish-db-backup
+spec:
+  cluster:
+    name: norish-db
+  schedule: "0 0 3 * * *"  # At 3 a.m. every day
+  backupOwnerReference: cluster
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
