@@ -17,6 +17,12 @@
       "automergeType": "branch"
     },
     {
+      "description": "Obscura tags carry a Norish build number (0.2.5-norish.1) that the default versioning treats as a fixed suffix",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["norishapp/obscura"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-norish\\.(?<build>\\d+)$"
+    },
+    {
       "description": "Update Renovate's own image once a week, after a release has been out for 3 days",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["renovate/renovate"],
