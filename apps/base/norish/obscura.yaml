@@ -1,0 +1,73 @@
+# Headless browser that renders recipe pages for URL imports. It refuses
+# requests without OBSCURA_CDP_TOKEN and blocks private network targets.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obscura
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: obscura
+  template:
+    metadata:
+      labels:
+        app: obscura
+    spec:
+      enableServiceLinks: false
+      # the distroless image defaults to root; it needs no privileges
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: obscura
+          image: norishapp/obscura:0.2.5-norish.1
+          ports:
+            - name: cdp
+              containerPort: 9222
+          env:
+            - name: OBSCURA_CDP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: norish-secrets
+                  key: OBSCURA_CDP_TOKEN
+          readinessProbe:
+            tcpSocket:
+              port: cdp
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: cdp
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: obscura
+spec:
+  selector:
+    app: obscura
+  ports:
+    - name: cdp
+      port: 9222
+      targetPort: cdp

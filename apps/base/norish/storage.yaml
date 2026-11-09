@@ -1,0 +1,12 @@
+# the storage class allows expansion: raise the size to grow in place
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: norish-uploads
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: synology-csi-iscsi-retain
+  resources:
+    requests:
+      storage: 5Gi
