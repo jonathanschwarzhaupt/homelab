@@ -24,6 +24,13 @@ spec:
     size: 2Gi
     storageClass: synology-csi-iscsi-retain
 
+  # Recovery reads WAL from the Azure archive, so keep little of it locally.
+  # CNPG's default wal_keep_size (512MB) only serves replicas.
+  postgresql:
+    parameters:
+      wal_keep_size: "64MB"
+      max_wal_size: "256MB"
+
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
