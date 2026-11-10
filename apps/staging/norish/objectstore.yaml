@@ -13,4 +13,7 @@ spec:
       storageSasToken:
         name: norish-secrets
         key: STORAGE_ACCOUNT_SAS_TOKEN
+    # archive_timeout ships a 16MB segment every 5 minutes, mostly empty
+    wal:
+      compression: snappy
   retentionPolicy: "14d"
