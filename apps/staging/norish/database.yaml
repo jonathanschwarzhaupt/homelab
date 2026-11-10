@@ -21,7 +21,7 @@ spec:
 
   # the storage class allows expansion: raise the size to grow in place
   storage:
-    size: 1Gi
+    size: 2Gi
     storageClass: synology-csi-iscsi-retain
 
   plugins:
