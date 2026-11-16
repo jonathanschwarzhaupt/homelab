@@ -9,3 +9,58 @@ spec:
       name: kube-prometheus-stack-admin-pw
       valuesKey: password
       targetPath: grafana.adminPassword
+  values:
+    alertmanager:
+      alertmanagerSpec:
+        # Mounted at /etc/alertmanager/secrets/<secret>/<key>
+        secrets:
+          - alertmanager-notifications
+      # Merged with the chart default config. Lists (routes, receivers)
+      # replace the defaults; inhibit_rules and templates stay from the chart.
+      config:
+        route:
+          receiver: ntfy
+          group_by: [alertname, namespace]
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 12h
+          routes:
+            # Dead man's switch: Watchdog always fires. healthchecks.io
+            # notifies when the pings stop.
+            - receiver: heartbeat
+              matchers: ['alertname = "Watchdog"']
+              group_wait: 0s
+              group_interval: 1m
+              repeat_interval: 1m
+            - receiver: "null"
+              matchers: ['alertname = "InfoInhibitor"']
+            - receiver: "null"
+              matchers: ['severity = "info"']
+            - receiver: ntfy-critical
+              matchers: ['severity = "critical"']
+        receivers:
+          - name: "null"
+          - name: heartbeat
+            webhook_configs:
+              - url_file: /etc/alertmanager/secrets/alertmanager-notifications/healthchecks-url
+                send_resolved: false
+          - name: ntfy
+            webhook_configs:
+              - url_file: /etc/alertmanager/secrets/alertmanager-notifications/ntfy-url
+                send_resolved: true
+                http_config:
+                  http_headers:
+                    X-Priority:
+                      values: ["3"]
+                    X-Tags:
+                      values: ["warning"]
+          - name: ntfy-critical
+            webhook_configs:
+              - url_file: /etc/alertmanager/secrets/alertmanager-notifications/ntfy-url
+                send_resolved: true
+                http_config:
+                  http_headers:
+                    X-Priority:
+                      values: ["5"]
+                    X-Tags:
+                      values: ["rotating_light"]

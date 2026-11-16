@@ -5,6 +5,7 @@ resources:
   - ../../base/kube-prometheus-stack/
   - ingress.yaml
   - admin-pw-secret.yaml
+  - alertmanager-notifications-secret.yaml
 
 patchesStrategicMerge:
   - release-overlay.yaml
