@@ -26,6 +26,17 @@
 - **Do not** delete the StatefulSet with `--cascade=orphan`. Flux does not make it again. Only the operator makes it, and the label fault stays.
 - Occurred: 2026-02-14 to 2026-11-16.
 
+## Operator error: "field http_headers not found"
+
+- **Symptom:**
+  - `kubectl get alertmanager` shows `Reconciled=False`.
+  - Operator log: `field http_headers not found in type alertmanager.httpClientConfig`.
+  - Alertmanager continues with the last good config. New changes have no effect.
+- **Cause:** The operator parses the config before Alertmanager. The operator can know fewer fields than Alertmanager.
+- **Repair:** Remove the field. Use a field that the operator knows. For ntfy: put priority and tags in the URL.
+- **Prevention:** After each change, make sure that `Reconciled=True`. `amtool check-config` does not find this fault.
+- Occurred: 2026-11-16.
+
 ## Alertmanager pod does not start after a change
 
 - **Symptom:** Pod `alertmanager-...-0` is `ContainerCreating` or `CrashLoopBackOff`.
