@@ -8,3 +8,7 @@ spec:
   url: oci://quay.io/jetstack/charts/cert-manager
   ref:
     semver: "1.21.x"
+  # Since 1.21.3 the .prov layer comes first; select the chart tarball explicitly.
+  layerSelector:
+    mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+    operation: copy
