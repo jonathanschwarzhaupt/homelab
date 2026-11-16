@@ -11,8 +11,8 @@
 | 1 | `alertname = Watchdog` | `heartbeat` | POST to healthchecks.io every minute |
 | 2 | `alertname = InfoInhibitor` | `null` | Discarded |
 | 3 | `severity = info` | `null` | Discarded |
-| 4 | `severity = critical` | `ntfy-critical` | ntfy (same URL as `ntfy` at this time) |
-| – | all other alerts | `ntfy` | ntfy, default priority |
+| 4 | `severity = critical` | `ntfy-critical` | ntfy, priority 5 (urgent), tag 🚨 (`ntfy-critical-url`) |
+| – | all other alerts | `ntfy` | ntfy, priority 3 (default) (`ntfy-url`) |
 
 - Timers:
   - `group_wait: 30s`: wait 30 s for more alerts of the same group before the first message.
@@ -52,9 +52,13 @@
 | Field | Value |
 | --- | --- |
 | `ntfy-url` | `https://ntfy.sh/<topic>?template=alertmanager` |
+| `ntfy-critical-url` | `https://ntfy.sh/<topic>?template=alertmanager&priority=5&tags=rotating_light` |
 | `healthchecks-url` | `https://hc-ping.com/<uuid>` |
 
-- Optional upgrade: add the field `ntfy-critical-url` = `https://ntfy.sh/<topic>?template=alertmanager&priority=5&tags=rotating_light`. Then set `url_file` of the `ntfy-critical` receiver to this field.
+- Make sure that the host is `ntfy.sh`. A wrong host sends the alerts and the topic to an unknown server.
+- Tags must be exact emoji short codes. Example: `rotating_light`, not `rotating_lights`.
+- The 1Password operator reads changes approximately every 10 min. Force a read:
+  `kubectl -n monitoring annotate onepassworditem alertmanager-notifications refresh="$(date +%s)" --overwrite`.
 
 - Alertmanager reads the files `/etc/alertmanager/secrets/alertmanager-notifications/<field>`.
 - **Caution:** If the Secret does not exist, the Alertmanager pod cannot start.
@@ -127,6 +131,6 @@
 
 | Severity | Use when | Phone |
 | --- | --- | --- |
-| `critical` | A service is down. Data loss is possible. Act now. | Message (urgent after the optional upgrade) |
+| `critical` | A service is down. Data loss is possible. Act now. | Urgent: pop-up, long vibration (Android); time-sensitive (iOS) |
 | `warning` | A fault will become a problem. Act this week. | Message |
 | `info` | Information only. | No message |
