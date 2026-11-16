@@ -38,6 +38,8 @@ spec:
               matchers: ['severity = "info"']
             - receiver: ntfy-critical
               matchers: ['severity = "critical"']
+        # Priority and tags are query parameters in the URL. The operator
+        # (v0.88) rejects http_config.http_headers.
         receivers:
           - name: "null"
           - name: heartbeat
@@ -48,19 +50,7 @@ spec:
             webhook_configs:
               - url_file: /etc/alertmanager/secrets/alertmanager-notifications/ntfy-url
                 send_resolved: true
-                http_config:
-                  http_headers:
-                    X-Priority:
-                      values: ["3"]
-                    X-Tags:
-                      values: ["warning"]
           - name: ntfy-critical
             webhook_configs:
               - url_file: /etc/alertmanager/secrets/alertmanager-notifications/ntfy-url
                 send_resolved: true
-                http_config:
-                  http_headers:
-                    X-Priority:
-                      values: ["5"]
-                    X-Tags:
-                      values: ["rotating_light"]
