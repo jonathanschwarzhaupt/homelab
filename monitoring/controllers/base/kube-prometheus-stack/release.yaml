@@ -31,3 +31,11 @@ spec:
   values:
     ingress:
       enabled: false
+    # k3s runs these inside the k3s process. Prometheus cannot scrape them
+    # as separate targets, so their "Down" alerts always fire.
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false

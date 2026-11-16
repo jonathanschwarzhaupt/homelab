@@ -1,0 +1,60 @@
+# Blackbox probes of the in-cluster service endpoints.
+# The label release=kube-prometheus-stack makes Prometheus select them.
+# Public URLs are checked from outside by UptimeRobot.
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: services-http
+  labels:
+    release: kube-prometheus-stack
+spec:
+  jobName: blackbox
+  interval: 60s
+  module: http_2xx
+  prober:
+    url: blackbox-exporter.monitoring.svc:9115
+  targets:
+    staticConfig:
+      static:
+        - http://actualbudget.actualbudget.svc:5006/
+        - http://home-app.home-app-staging.svc:8090/
+        - http://home-blog-public.home-blog.svc:4000/
+        - http://home-blog-private.home-blog.svc:4000/
+        - http://linkding.linkding.svc:9090/
+        - http://mealie.mealie.svc:9000/
+        - http://norish.norish.svc:3000/
+        - http://kube-prometheus-stack-grafana.monitoring.svc/api/health
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: services-http-auth
+  labels:
+    release: kube-prometheus-stack
+spec:
+  jobName: blackbox
+  interval: 60s
+  module: http_2xx_or_401
+  prober:
+    url: blackbox-exporter.monitoring.svc:9115
+  targets:
+    staticConfig:
+      static:
+        - http://obsidian-livesync-svc-couchdb.obsidian-livesync.svc:5984/
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: services-tcp
+  labels:
+    release: kube-prometheus-stack
+spec:
+  jobName: blackbox
+  interval: 60s
+  module: tcp_connect
+  prober:
+    url: blackbox-exporter.monitoring.svc:9115
+  targets:
+    staticConfig:
+      static:
+        - gizmosql.gizmosql.svc:31337
